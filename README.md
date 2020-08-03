@@ -1,23 +1,12 @@
-# svelte app
-
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template-webpack.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template-webpack svelte-app
-cd svelte-app
-```
+# Tatum Wallet
 
 *Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
 
 ## Get started
 
 Install the dependencies...
 
 ```bash
-cd svelte-app
 npm install
 ```
 
@@ -28,6 +17,13 @@ npm run dev
 ```
 
 Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and the page should reload with your changes.
+
+## Tatum API configuration
+
+In order to communicate with [Tatum API](https://tatum.io), API Key must be provided in *.env* file. Create *.env* file and enter valid API Key. 
+```dotenv
+TATUM_API_KEY = 123456789123456789123456789
+```
 
 
 ## Deploying to the web

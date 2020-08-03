@@ -4,6 +4,8 @@ public/bundle.*
 package-lock.json
 yarn.lock
 
+.env
+
 # Logs
 logs
 *.log
