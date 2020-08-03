@@ -18,10 +18,10 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack-dev-server --content-base public"
+    "dev": "webpack-dev-server --content-base public --history-api-fallback"
   },
   "dependencies": {
-    "@tatumio/tatum": "^1.1.8",
+    "@tatumio/tatum": "^1.1.10",
     "reflect-metadata": "^0.1.13",
     "svelte-routing": "^1.4.2"
   }

@@ -177,7 +177,7 @@
                                         {transaction.address || transaction.counterAccountId}
                                     </p>
                                     <p class="m-0 id">
-                                        <b>Transaction ID:</b> <span>{transaction.reference}</span>
+                                        <b>Transaction ID:</b> <span>{transaction.txId}</span>
                                     </p>
                                 </div>
                                 <div class="col-3 pl-0">

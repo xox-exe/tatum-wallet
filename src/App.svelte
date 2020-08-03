@@ -1,6 +1,5 @@
 <script>
     import {Router, Route, Link, link} from "svelte-routing";
-    import img from "./images/cryptoLogo.png";
     import Dashboard from './Dashboard.svelte';
     import SendPayment from './SendPayment.svelte';
     import RequestPayment from './RequestPayment.svelte';
@@ -23,7 +22,7 @@
         <ul class="navbar-nav">
             <li class="nav-item pr-122">
                 <div class="imgDiv" style="width: 100px;">
-                    <Link to="/"><img alt="logo" src="{img}" style="width: 100%;"/></Link>
+                    <Link to="/"><img alt="logo" src="/cryptoLogo.png" style="width: 100%;"/></Link>
                 </div>
             </li>
             <li class="nav-item mt-20 m7">
@@ -41,6 +40,7 @@
     <div class="container-fluid containerMain mt-5">
         <Route path="/" component="{Dashboard}"/>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
