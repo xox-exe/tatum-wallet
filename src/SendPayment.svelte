@@ -103,7 +103,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 mt-2">
                             <button class="btn btn-sub btnActive" on:click={sendTransaction}>Continue</button>
-                            <p class="reqTxt">
+                            <p class="reqTxt mt-4">
                                 {#if txId}
                                     TransactionId:<br/>
                                     <a href="https://ropsten.etherscan.io/tx/{txId}" target="_blank">{txId}</a>

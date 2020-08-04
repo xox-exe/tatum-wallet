@@ -23,9 +23,6 @@
     async function generateAccounts() {
         const btcMnemonic = await generateWallet(Currency.BTC, true);
         const ethMnemonic = await generateWallet(Currency.ETH, true);
-        localStorage.setItem('BTC_WALLET', btcMnemonic.mnemonic);
-        localStorage.setItem('ETH_WALLET', ethMnemonic.mnemonic);
-
         btcAccount = await createAccount({
             currency: Currency.BTC,
             xpub: btcMnemonic.xpub,
@@ -44,6 +41,8 @@
         localStorage.setItem('CUSTOMER_ID', btcAccount.customerId);
         localStorage.setItem('BTC_ACCOUNT_ID', btcAccount.id);
         localStorage.setItem('ETH_ACCOUNT_ID', ethAccount.id);
+        localStorage.setItem('BTC_WALLET', btcMnemonic.mnemonic);
+        localStorage.setItem('ETH_WALLET', ethMnemonic.mnemonic);
     }
 
     function redirect(currency, isSendPage) {
@@ -107,10 +106,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-12 col-sm-12">
-                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('BTC', true)}>Send BTC</button>
+                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('BTC', true)}>Send BTC
+                            </button>
                         </div>
                         <div class="col-md-6 col-12 col-sm-12">
-                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('BTC', false)}>Request BTC</button>
+                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('BTC', false)}>Request
+                                BTC
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -140,60 +142,67 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-12 col-sm-12">
-                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('ETH', true)}>Send ETH</button>
+                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('ETH', true)}>Send ETH
+                            </button>
                         </div>
                         <div class="col-md-6 col-12 col-sm-12">
-                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('ETH', false)}>Request ETH</button>
+                            <button class="btn btn-outlineSR w-sm-100" on:click={() => redirect('ETH', false)}>Request
+                                ETH
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         {/if}
         <p class="mt20">
-            <a class="atag" on:click={generateAccounts}><i class="fa fa-plus-circle"></i> Add a CryptoCurrency</a>
+            <a class="atag" on:click={generateAccounts}><i class="fa fa-plus-circle"></i> Add a wallet</a>
         </p>
     </div>
-    <div class="col-md-6 col-sm-12 col-12 pl-0">
-        <h4 class="title">Latest Transactions</h4>
-        <div class="btns mb20">
-            <button class="btn btn-outline {filter === 'BTC' ? 'btn-outline-active' : ''}"
-                    on:click={() => getTransactionForAccount('BTC')}>BTC
-            </button>
-            <button class="btn btn-outline {filter === 'ETH' ? 'btn-outline-active' : ''}"
-                    on:click={() => getTransactionForAccount('ETH')}>ETH
-            </button>
-        </div>
-        {#each transactions as transaction}
-            <div class="card cardTrans mb30">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-9 pr5">
-                                    <p class="date m-0">
-                                        {new Date(transaction.created).toLocaleString()}
-                                    </p>
-                                    <p class="id m5-6">
-                                        {transaction.address || transaction.counterAccountId}
-                                    </p>
-                                    <p class="m-0 id">
-                                        <b>Transaction ID:</b> <span>{transaction.txId}</span>
-                                    </p>
-                                </div>
-                                <div class="col-3 pl-0">
-                                    <p class="amt mb10">
-                                        {transaction.amount} {transaction.currency}
-                                    </p>
-                                    <p class="amtDol">
-                                        ${parseFloat(transaction.marketValue.amount).toFixed(2)}
-                                    </p>
+    {#if transactions.length}
+        <div class="col-md-6 col-sm-12 col-12 pl-0">
+            <h4 class="title">Latest Transactions</h4>
+            <div class="btns mb20">
+                <button class="btn btn-outline {filter === 'BTC' ? 'btn-outline-active' : ''}"
+                        on:click={() => getTransactionForAccount('BTC')}>BTC
+                </button>
+                <button class="btn btn-outline {filter === 'ETH' ? 'btn-outline-active' : ''}"
+                        on:click={() => getTransactionForAccount('ETH')}>ETH
+                </button>
+            </div>
+            {#each transactions as transaction}
+                <div class="card cardTrans mb30">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-9 pr5">
+                                        <p class="date m-0">
+                                            {new Date(transaction.created).toLocaleString()}
+                                        </p>
+                                        <p class="id m5-6">
+                                            {transaction.address || transaction.counterAccountId}
+                                        </p>
+                                        <p class="m-0 id">
+                                            <b>Transaction ID:</b> <span><a
+                                                href="https://ropsten.etherscan.io/tx/{transaction.txId}"
+                                                target="_blank">{transaction.txId}</a></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-3 pl-0">
+                                        <p class="amt mb10">
+                                            {transaction.amount} {transaction.currency}
+                                        </p>
+                                        <p class="amtDol">
+                                            ${parseFloat(transaction.marketValue.amount).toFixed(2)}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <hr/>
                     </div>
-                    <hr/>
                 </div>
-            </div>
-        {/each}
-    </div>
+            {/each}
+        </div>
+    {/if}
 </div>
