@@ -15,7 +15,6 @@
     import "./css/bootstrap.css"
     import "./css/main.css"
 
-    export let url = '';
     export let filter = '';
     let btcAccount, ethAccount, btcAddress, ethAddress;
     let transactions = [];
@@ -93,7 +92,7 @@
                         </div>
                     </div>
                     <div class="icoRight">
-                        <span><img src="{bcoinImg}"></span>
+                        <span><img alt="btc" src="{bcoinImg}"></span>
                     </div>
                     <div class="row">
                         <div class="col-12 pl-0">
@@ -129,7 +128,7 @@
                         </div>
                     </div>
                     <div class="icoRight">
-                        <span><img src="{ethImg}"></span>
+                        <span><img alt="eth" src="{ethImg}"></span>
                     </div>
                     <div class="row">
                         <div class="col-12 pl-0">
@@ -155,7 +154,7 @@
             </div>
         {/if}
         <p class="mt20">
-            <a class="atag" on:click={generateAccounts}><i class="fa fa-plus-circle"></i> Add a wallet</a>
+            <a href="/#add" class="atag" on:click={generateAccounts}><i class="fa fa-plus-circle"></i> Add a wallet</a>
         </p>
     </div>
     {#if transactions.length}
