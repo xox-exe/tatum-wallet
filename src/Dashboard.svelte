@@ -10,13 +10,13 @@
         getTransactionsByCustomer,
         getAccountById,
         generateDepositAddress,
-        getDepositAddressesForAccount, getTransactionsByAccount
+        getDepositAddressesForAccount, getTransactionsByAccount, getExchangeRate
     } from '@tatumio/tatum';
     import "./css/bootstrap.css"
     import "./css/main.css"
 
     export let filter = '';
-    let btcAccount, ethAccount, btcAddress, ethAddress;
+    let btcAccount, ethAccount, btcAddress, ethAddress, btcExchangeRate, ethExchangeRate;
     let transactions = [];
 
     async function generateAccounts() {
@@ -52,11 +52,21 @@
         const customerId = localStorage.getItem('CUSTOMER_ID');
         const btcAccountId = localStorage.getItem('BTC_ACCOUNT_ID');
         const ethAccountId = localStorage.getItem('ETH_ACCOUNT_ID');
-        btcAccount = await getAccountById(btcAccountId);
-        ethAccount = await getAccountById(ethAccountId);
-        btcAddress = (await getDepositAddressesForAccount(btcAccountId))[0];
-        ethAddress = (await getDepositAddressesForAccount(ethAccountId))[0];
-        transactions = await getTransactionsByCustomer({id: customerId});
+        const all = await Promise.all([
+            getExchangeRate(Currency.BTC),
+            getExchangeRate(Currency.ETH),
+            getAccountById(btcAccountId),
+            getAccountById(ethAccountId),
+            getDepositAddressesForAccount(btcAccountId),
+            getDepositAddressesForAccount(ethAccountId),
+            getTransactionsByCustomer({id: customerId})]);
+        btcExchangeRate = parseFloat(all[0].value);
+        ethExchangeRate = parseFloat(all[1].value);
+        btcAccount = all[2];
+        ethAccount = all[3];
+        btcAddress = all[4][0];
+        ethAddress = all[5][0];
+        transactions = all[6];
     })
 
     async function getTransactionForAccount(currency) {
@@ -97,7 +107,8 @@
                     <div class="row">
                         <div class="col-12 pl-0">
                             <h4 class="totalBalance mb-0">{btcAccount.balance.accountBalance} BTC</h4>
-                            <p class="m-0 amountDol">${parseFloat(btcAccount.balance.accountBalance) * 12000}</p>
+                            <p class="m-0 amountDol">
+                                ${parseFloat(btcAccount.balance.accountBalance) * btcExchangeRate}</p>
                             <p class="amountDol code pt-3">
                                 {btcAddress ? btcAddress.address : ''}
                             </p>
@@ -133,7 +144,8 @@
                     <div class="row">
                         <div class="col-12 pl-0">
                             <h4 class="totalBalance mb-0">{ethAccount.balance.accountBalance} ETH</h4>
-                            <p class="m-0 amountDol">${parseFloat(ethAccount.balance.accountBalance) * 400}</p>
+                            <p class="m-0 amountDol">
+                                ${parseFloat(ethAccount.balance.accountBalance) * ethExchangeRate}</p>
                             <p class="amountDol code pt-3">
                                 {ethAddress ? ethAddress.address : ''}
                             </p>
@@ -168,9 +180,9 @@
                         on:click={() => getTransactionForAccount('ETH')}>ETH
                 </button>
             </div>
-            {#each transactions as transaction}
-                <div class="card cardTrans mb30">
-                    <div class="card-body">
+            <div class="card cardTrans mb30">
+                <div class="card-body">
+                    {#each transactions as transaction}
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
@@ -199,9 +211,9 @@
                             </div>
                         </div>
                         <hr/>
-                    </div>
+                    {/each}
                 </div>
-            {/each}
+            </div>
         </div>
     {/if}
 </div>

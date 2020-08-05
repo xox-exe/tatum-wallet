@@ -21,7 +21,7 @@
     "dev": "webpack-dev-server --content-base public --history-api-fallback"
   },
   "dependencies": {
-    "@tatumio/tatum": "^1.1.10",
+    "@tatumio/tatum": "^1.1.11",
     "reflect-metadata": "^0.1.13",
     "svelte-routing": "^1.4.2"
   }
