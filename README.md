@@ -4,6 +4,12 @@
 
 ## Get started
 
+Clone the repository
+
+```bash
+git clone https://github.com/tatumio/tatum-wallet.git
+```
+
 Install the dependencies...
 
 ```bash
