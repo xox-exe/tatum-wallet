@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "tatum-wallet",
   "version": "1.0.0",
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -16,12 +16,18 @@
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.3.1"
   },
+  "license": "MIT",
+  "author": {
+    "email": "samuel.sramko@tatum.io",
+    "name": "Samuel Sramko",
+    "url": "https://tatum.io"
+  },
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "webpack-dev-server --content-base public --history-api-fallback"
   },
   "dependencies": {
-    "@tatumio/tatum": "^1.1.11",
+    "@tatumio/tatum": "^1.1.15",
     "reflect-metadata": "^0.1.13",
     "svelte-routing": "^1.4.2"
   }

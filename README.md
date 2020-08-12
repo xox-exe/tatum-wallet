@@ -1,6 +1,6 @@
 # Tatum Wallet
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+*Note that you will need to have [Node.js](https://nodejs.org/en/download/current/) installed.*
 
 ## Get started
 
@@ -8,6 +8,8 @@ Clone the repository
 
 ```bash
 git clone https://github.com/tatumio/tatum-wallet.git
+
+cd tatum-wallet
 ```
 
 Install the dependencies...

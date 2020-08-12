@@ -19,67 +19,71 @@
     let btcAccount, ethAccount, btcAddress, ethAddress, btcExchangeRate, ethExchangeRate;
     let transactions = [];
 
-    async function generateAccounts() {
-        const btcMnemonic = await generateWallet(Currency.BTC, true);
-        const ethMnemonic = await generateWallet(Currency.ETH, true);
-        btcAccount = await createAccount({
-            currency: Currency.BTC,
-            xpub: btcMnemonic.xpub,
-            accountingCurrency: 'USD',
-            customer: {externalId: 'samuel.sramko@tatum.io'}
-        })
-        ethAccount = await createAccount({
-            currency: Currency.ETH,
-            xpub: ethMnemonic.xpub,
-            accountingCurrency: 'USD',
-            customer: {externalId: 'samuel.sramko@tatum.io'}
-        })
-        await generateDepositAddress(btcAccount.id);
-        await generateDepositAddress(ethAccount.id);
-
-        localStorage.setItem('CUSTOMER_ID', btcAccount.customerId);
-        localStorage.setItem('BTC_ACCOUNT_ID', btcAccount.id);
-        localStorage.setItem('ETH_ACCOUNT_ID', ethAccount.id);
-        localStorage.setItem('BTC_WALLET', btcMnemonic.mnemonic);
-        localStorage.setItem('ETH_WALLET', ethMnemonic.mnemonic);
-    }
-
     function redirect(currency, isSendPage) {
         navigate(isSendPage ? `payment/send/${currency}` : `payment/request/${currency}`)
     }
 
+    async function generateAccounts() {
+        // const btcMnemonic = await generateWallet(Currency.BTC, true);
+        // const ethMnemonic = await generateWallet(Currency.ETH, true);
+        // btcAccount = await createAccount({
+        //     currency: Currency.BTC,
+        //     xpub: btcMnemonic.xpub,
+        //     accountingCurrency: 'USD',
+        //     customer: {externalId: 'samuel.sramko+1@tatum.io'}
+        // })
+        // ethAccount = await createAccount({
+        //     currency: Currency.ETH,
+        //     xpub: ethMnemonic.xpub,
+        //     accountingCurrency: 'USD',
+        //     customer: {externalId: 'samuel.sramko+1@tatum.io'}
+        // })
+        // await generateDepositAddress(btcAccount.id);
+        // await generateDepositAddress(ethAccount.id);
+        //
+        // localStorage.setItem('CUSTOMER_ID', btcAccount.customerId);
+        // localStorage.setItem('BTC_ACCOUNT_ID', btcAccount.id);
+        // localStorage.setItem('ETH_ACCOUNT_ID', ethAccount.id);
+        // localStorage.setItem('BTC_WALLET', btcMnemonic.mnemonic);
+        // localStorage.setItem('ETH_WALLET', ethMnemonic.mnemonic);
+    }
+
     onMount(async () => {
+        const rates = await Promise.all([
+            getExchangeRate(Currency.BTC),
+            getExchangeRate(Currency.ETH)]);
+        btcExchangeRate = parseFloat(rates[0].value);
+        ethExchangeRate = parseFloat(rates[1].value);
+
         const customerId = localStorage.getItem('CUSTOMER_ID');
         const btcAccountId = localStorage.getItem('BTC_ACCOUNT_ID');
         const ethAccountId = localStorage.getItem('ETH_ACCOUNT_ID');
-        const all = await Promise.all([
-            getExchangeRate(Currency.BTC),
-            getExchangeRate(Currency.ETH),
-            getAccountById(btcAccountId),
-            getAccountById(ethAccountId),
-            getDepositAddressesForAccount(btcAccountId),
-            getDepositAddressesForAccount(ethAccountId),
-            getTransactionsByCustomer({id: customerId})]);
-        btcExchangeRate = parseFloat(all[0].value);
-        ethExchangeRate = parseFloat(all[1].value);
-        btcAccount = all[2];
-        ethAccount = all[3];
-        btcAddress = all[4][0];
-        ethAddress = all[5][0];
-        transactions = all[6];
+        if (!customerId) {
+            return;
+        }
+        // const all = await Promise.all([
+        //     getAccountById(btcAccountId),
+        //     getAccountById(ethAccountId),
+        //     getDepositAddressesForAccount(btcAccountId),
+        //     getDepositAddressesForAccount(ethAccountId),
+        //     getTransactionsByCustomer({id: customerId})]);
+        // btcAccount = all[0];
+        // ethAccount = all[1];
+        // btcAddress = all[2][0];
+        // ethAddress = all[3][0];
+        // transactions = all[4];
     })
 
     async function getTransactionForAccount(currency) {
-        const customerId = localStorage.getItem('CUSTOMER_ID');
-        if (filter === currency) {
-            transactions = await getTransactionsByCustomer({id: customerId});
-            filter = '';
-            return;
-        }
-
-        filter = currency;
-        const accountId = currency === Currency.BTC ? localStorage.getItem('BTC_ACCOUNT_ID') : localStorage.getItem('ETH_ACCOUNT_ID');
-        transactions = await getTransactionsByAccount({id: accountId});
+        // if (filter === currency) {
+        //     transactions = await getTransactionsByCustomer({id: localStorage.getItem('CUSTOMER_ID')});
+        //     filter = '';
+        //     return;
+        // }
+        //
+        // filter = currency;
+        // const accountId = currency === Currency.BTC ? localStorage.getItem('BTC_ACCOUNT_ID') : localStorage.getItem('ETH_ACCOUNT_ID');
+        // transactions = await getTransactionsByAccount({id: accountId});
     }
 </script>
 

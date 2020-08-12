@@ -22,27 +22,29 @@
     async function sendTransaction() {
         const recipient = document.getElementById('address').value;
         const amount = document.getElementById('amount').value;
+
         const senderAccountId = localStorage.getItem(`${currency}_ACCOUNT_ID`);
         const mnemonic = localStorage.getItem(`${currency}_WALLET`).mnemonic;
-        const {address, derivationKey} = (await getDepositAddressesForAccount(senderAccountId))[0];
-        const privateKey = await generatePrivateKeyFromMnemonic(currency, true, mnemonic, derivationKey);
+
+        // const {address, derivationKey} = (await getDepositAddressesForAccount(senderAccountId))[0];
+        // const privateKey = await generatePrivateKeyFromMnemonic(currency, true, mnemonic, derivationKey);
         try {
             switch (currency) {
                 case Currency.BTC:
-                    txId = (await sendBitcoinOffchainTransaction(true, {
-                        senderAccountId,
-                        keyPair: [{address, private: privateKey}],
-                        address: recipient,
-                        amount
-                    })).txId;
+                    // txId = (await sendBitcoinOffchainTransaction(true, {
+                    //     senderAccountId,
+                    //     keyPair: [{address, privateKey: privateKey}],
+                    //     address: recipient,
+                    //     amount
+                    // })).txId;
                     break;
                 case Currency.ETH:
-                    txId = (await sendEthOffchainTransaction(true, {
-                        senderAccountId,
-                        privateKey,
-                        address: recipient,
-                        amount
-                    })).txId;
+                    // txId = (await sendEthOffchainTransaction(true, {
+                    //     senderAccountId,
+                    //     privateKey,
+                    //     address: recipient,
+                    //     amount
+                    // })).txId;
                     break;
             }
         } catch (e) {
