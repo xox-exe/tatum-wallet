@@ -38,8 +38,8 @@
         //     accountingCurrency: 'USD',
         //     customer: {externalId: 'samuel.sramko+1@tatum.io'}
         // })
-        // await generateDepositAddress(btcAccount.id);
-        // await generateDepositAddress(ethAccount.id);
+        // btcAddress = await generateDepositAddress(btcAccount.id);
+        // ethAddress = await generateDepositAddress(ethAccount.id);
         //
         // localStorage.setItem('CUSTOMER_ID', btcAccount.customerId);
         // localStorage.setItem('BTC_ACCOUNT_ID', btcAccount.id);
