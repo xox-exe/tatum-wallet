@@ -24,28 +24,28 @@
     }
 
     async function generateAccounts() {
-        // const btcMnemonic = await generateWallet(Currency.BTC, true);
-        // const ethMnemonic = await generateWallet(Currency.ETH, true);
-        // btcAccount = await createAccount({
-        //     currency: Currency.BTC,
-        //     xpub: btcMnemonic.xpub,
-        //     accountingCurrency: 'USD',
-        //     customer: {externalId: 'samuel.sramko+1@tatum.io'}
-        // })
-        // ethAccount = await createAccount({
-        //     currency: Currency.ETH,
-        //     xpub: ethMnemonic.xpub,
-        //     accountingCurrency: 'USD',
-        //     customer: {externalId: 'samuel.sramko+1@tatum.io'}
-        // })
-        // btcAddress = await generateDepositAddress(btcAccount.id);
-        // ethAddress = await generateDepositAddress(ethAccount.id);
-        //
-        // localStorage.setItem('CUSTOMER_ID', btcAccount.customerId);
-        // localStorage.setItem('BTC_ACCOUNT_ID', btcAccount.id);
-        // localStorage.setItem('ETH_ACCOUNT_ID', ethAccount.id);
-        // localStorage.setItem('BTC_WALLET', btcMnemonic.mnemonic);
-        // localStorage.setItem('ETH_WALLET', ethMnemonic.mnemonic);
+        const btcMnemonic = await generateWallet(Currency.BTC, true);
+        const ethMnemonic = await generateWallet(Currency.ETH, true);
+        btcAccount = await createAccount({
+            currency: Currency.BTC,
+            xpub: btcMnemonic.xpub,
+            accountingCurrency: 'USD',
+            customer: {externalId: 'samuel.sramko@tatum.io'}
+        })
+        ethAccount = await createAccount({
+            currency: Currency.ETH,
+            xpub: ethMnemonic.xpub,
+            accountingCurrency: 'USD',
+            customer: {externalId: 'samuel.sramko@tatum.io'}
+        })
+        btcAddress = await generateDepositAddress(btcAccount.id);
+        ethAddress = await generateDepositAddress(ethAccount.id);
+
+        localStorage.setItem('CUSTOMER_ID', btcAccount.customerId);
+        localStorage.setItem('BTC_ACCOUNT_ID', btcAccount.id);
+        localStorage.setItem('ETH_ACCOUNT_ID', ethAccount.id);
+        localStorage.setItem('BTC_WALLET', btcMnemonic.mnemonic);
+        localStorage.setItem('ETH_WALLET', ethMnemonic.mnemonic);
     }
 
     onMount(async () => {
@@ -61,29 +61,29 @@
         if (!customerId) {
             return;
         }
-        // const all = await Promise.all([
-        //     getAccountById(btcAccountId),
-        //     getAccountById(ethAccountId),
-        //     getDepositAddressesForAccount(btcAccountId),
-        //     getDepositAddressesForAccount(ethAccountId),
-        //     getTransactionsByCustomer({id: customerId})]);
-        // btcAccount = all[0];
-        // ethAccount = all[1];
-        // btcAddress = all[2][0];
-        // ethAddress = all[3][0];
-        // transactions = all[4];
+        const all = await Promise.all([
+            getAccountById(btcAccountId),
+            getAccountById(ethAccountId),
+            getDepositAddressesForAccount(btcAccountId),
+            getDepositAddressesForAccount(ethAccountId),
+            getTransactionsByCustomer({id: customerId})]);
+        btcAccount = all[0];
+        ethAccount = all[1];
+        btcAddress = all[2][0];
+        ethAddress = all[3][0];
+        transactions = all[4];
     })
 
     async function getTransactionForAccount(currency) {
-        // if (filter === currency) {
-        //     transactions = await getTransactionsByCustomer({id: localStorage.getItem('CUSTOMER_ID')});
-        //     filter = '';
-        //     return;
-        // }
-        //
-        // filter = currency;
-        // const accountId = currency === Currency.BTC ? localStorage.getItem('BTC_ACCOUNT_ID') : localStorage.getItem('ETH_ACCOUNT_ID');
-        // transactions = await getTransactionsByAccount({id: accountId});
+        if (filter === currency) {
+            transactions = await getTransactionsByCustomer({id: localStorage.getItem('CUSTOMER_ID')});
+            filter = '';
+            return;
+        }
+
+        filter = currency;
+        const accountId = currency === Currency.BTC ? localStorage.getItem('BTC_ACCOUNT_ID') : localStorage.getItem('ETH_ACCOUNT_ID');
+        transactions = await getTransactionsByAccount({id: accountId});
     }
 </script>
 

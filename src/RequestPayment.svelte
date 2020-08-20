@@ -40,7 +40,7 @@
 
     async function getAddress() {
         const accountId = localStorage.getItem(currency === Currency.BTC ? 'BTC_ACCOUNT_ID' : 'ETH_ACCOUNT_ID');
-        // address = (await getDepositAddressesForAccount(accountId))[0].address;
+        address = (await getDepositAddressesForAccount(accountId))[0].address;
         document.getElementById('qrCode').innerHTML = '';
         new window.QRCode('qrCode', {text: `${currency}:${address}`, width: 250, height: 250})
     }
