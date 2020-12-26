@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository is part of the online workshop - How to build a crypto wallet in an hour?. Video is available [here](https://www.youtube.com/watch?v=s3mLvVGM9GQ)
+This repository is part of the online workshop - How to build a crypto wallet in an hour?. Video is available [here](https://www.youtube.com/watch?v=s3mLvVGM9GQ).
 
 ## Get started
 
