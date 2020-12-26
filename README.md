@@ -1,6 +1,10 @@
 # Tatum Wallet
 
-*Note that you will need to have [Node.js](https://nodejs.org/en/download/current/) installed.*
+*Note that you will need to have [Node.js](https://nodejs.org/en/download/current/) 14+ installed.*
+
+## Introduction
+
+This repository is part of the online workshop - How to build a crypto wallet in an hour?. Video is available [here](https://www.youtube.com/watch?v=s3mLvVGM9GQ)
 
 ## Get started
 
